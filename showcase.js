@@ -6,18 +6,18 @@ console.log(user.build());
 
 // Select from
 var q = Sql.query().SELECT(user.star()).FROM(user);
-console.log(q.build());
+console.log(q.build().text);
 
 // Aliases
 var a = article.alias();
 var q = Sql.query().DISTINCT().SELECT(a.f("user_id")).FROM(a);
-console.log(q.build());
+console.log(q.build().text);
 
 // Join
 var u1 = user.alias();
 var u2 = user.alias();
 var q = Sql.query().SELECT(u1.f("id"), u2.f("id")).FROM(u1).JOIN(u2, u1.f("name").EQ(u2.f("name")), "LEFT");
-console.log(q.build());
+console.log(q.build().text);
 
 // Params
 var a = article.alias();
@@ -27,12 +27,12 @@ console.log(q.build());
 // Literals
 var a = article.alias();
 var q = Sql.query().FROM(a).WHERE(a.f("id").EQ(Sql.literal(123)));
-console.log(q.build());
+console.log(q.build().text);
 
 // Functions
 var a = article.alias();
 var q = Sql.query().SELECT(Sql.count(a.f("user_id").DISTINCT())).FROM(a);
-console.log(q.build());
+console.log(q.build().text);
 
 // Lists
 var u = user.alias();
@@ -50,7 +50,7 @@ var u = user.alias();
 var q = Sql.query().DISTINCT().FROM(u);
 var a = joinArticles(q, u);
 q.WHERE(fooArticles(a));
-console.log(q.build());
+console.log(q.build().text);
 
 // Sharing parameters
 var u = user.alias();
